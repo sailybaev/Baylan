@@ -12,9 +12,16 @@ public final class MessageService {
     private let crypto: any CryptoEngineProtocol
     private let identityStore: IdentityStore
 
+    // MARK: - Observable state
+
+    /// Bumped on the main actor whenever an inbound message is received.
+    /// Observers (e.g. ChatView) can watch this to trigger a reload.
+    public var lastIncomingMessageAt: Date? = nil
+
     // MARK: - Task
 
     nonisolated(unsafe) private var receiveTask: Task<Void, Never>?
+    private var lastIncomingMessageTask: Task<Void, Never>?
 
     // MARK: - Init
 
@@ -39,7 +46,8 @@ public final class MessageService {
     public func startReceiving() {
         receiveTask = Task { [weak self] in
             guard let self else { return }
-            for await event in meshRouter.events {
+            let stream = meshRouter.subscribe()
+            for await event in stream {
                 guard !Task.isCancelled else { break }
                 await MainActor.run {
                     self.handle(meshEvent: event)
@@ -100,10 +108,16 @@ public final class MessageService {
         try await repository.saveMessage(message)
 
         // Send into mesh
-        try await meshRouter.send(envelope)
-
-        // Update to relayed once sent
-        try await repository.updateMessageState(message.messageId, state: .relayed)
+        do {
+            try await meshRouter.send(envelope)
+            // Update to relayed once sent
+            try await repository.updateMessageState(message.messageId, state: .relayed)
+            self.bumpLastIncomingMessage()
+        } catch {
+            try await repository.updateMessageState(message.messageId, state: .failed)
+            self.bumpLastIncomingMessage()
+            throw error
+        }
     }
 
     /// Send a message to the Nearby public mesh channel.
@@ -144,26 +158,56 @@ public final class MessageService {
         switch event {
         case .messageReceived(var message):
             // Decrypt if direct
-            Task {
+            Task { [weak self] in
+                guard let self else { return }
                 if message.recipientId != "nearby" {
                     message = await decryptIfNeeded(message)
                 }
                 try? await repository.saveMessage(message)
-                // Increment unread
-                if let thread = try? await repository.thread(forPeer: message.senderId) {
+                
+                let isNearby = message.recipientId == "nearby"
+                let peerForThread = isNearby ? "nearby" : message.senderId
+                
+                if let thread = try? await repository.thread(forPeer: peerForThread) {
                     try? await repository.updateUnreadCount(thread.threadId, count: thread.unreadCount + 1)
+                } else if !isNearby {
+                    let newThread = MessageThread(
+                        threadId: message.threadId,
+                        peerId: message.senderId,
+                        conversationType: .direct,
+                        unreadCount: 1
+                    )
+                    try? await repository.saveThread(newThread)
                 }
+                self.bumpLastIncomingMessage()
             }
 
         case .ackReceived(let messageId, _):
-            Task {
+            Task { [weak self] in
+                guard let self else { return }
                 if let uuid = UUID(uuidString: messageId) {
                     try? await repository.updateMessageState(uuid, state: .delivered)
                 }
+                self.bumpLastIncomingMessage()
             }
 
         case .presenceReceived:
             break
+
+        case .connectionStateChanged:
+            break
+
+        @unknown default:
+            break
+        }
+    }
+
+    private func bumpLastIncomingMessage() {
+        lastIncomingMessageTask?.cancel()
+        lastIncomingMessageTask = Task {
+            try? await Task.sleep(nanoseconds: 50_000_000) // 50ms trailing debounce
+            guard !Task.isCancelled else { return }
+            self.lastIncomingMessageAt = Date()
         }
     }
 
@@ -171,8 +215,29 @@ public final class MessageService {
     /// Falls back to the original message if decryption fails (e.g., not the intended recipient).
     private func decryptIfNeeded(_ message: Message) async -> Message {
         guard message.body == nil else { return message }
-        // Decryption would happen here if we stored the raw ciphertext
-        // For now the MeshRouter already routes only messages addressed to us
-        return message
+        guard let payload = message.payload else { return message }
+        
+        guard let agreementKey = try? identityStore.agreementPrivateKey() else { return message }
+        guard let senderIdentity = try? await repository.identity(for: message.senderId) else { return message }
+        
+        // Sender's agreement key is bytes 32..<64 of their publicKey payload
+        let senderAgreementKey = senderIdentity.publicKey.count >= 64
+            ? senderIdentity.publicKey[32..<64]
+            : senderIdentity.publicKey
+
+        guard let decrypted = try? crypto.decrypt(
+            payload,
+            senderPublicKey: Data(senderAgreementKey),
+            recipientPrivateKey: agreementKey
+        ) else { return message }
+
+        guard let parsed = try? BaylanMessagePayload(serializedBytes: decrypted) else { return message }
+        
+        var decryptedMessage = message
+        decryptedMessage.body = parsed.body.isEmpty ? nil : parsed.body
+        if let tid = UUID(uuidString: parsed.threadID) {
+            decryptedMessage.threadId = tid
+        }
+        return decryptedMessage
     }
 }

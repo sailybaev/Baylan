@@ -22,10 +22,29 @@ struct ConversationsView: View {
             .navigationBarTitleDisplayMode(.large)
             .searchable(text: $searchText, prompt: "Search conversations")
             .background(BaylanTheme.background)
+            .toolbar {
+                #if targetEnvironment(macCatalyst)
+                ToolbarItem(placement: .automatic) {
+                    if let env = appEnvironment {
+                        macStatusIndicator(env: env)
+                    }
+                }
+                #else
+                ToolbarItem(placement: .principal) {
+                    if let env = appEnvironment {
+                        ConnectionStatusBanner(meshDeviceCount: env.peerService.nearbyPeers.count)
+                    }
+                }
+                #endif
+            }
         }
         .onAppear { setupViewModel() }
         .onChange(of: searchText) { _, newValue in
             viewModel?.searchText = newValue
+        }
+        .onChange(of: appEnvironment?.messageService.lastIncomingMessageAt) { _, _ in
+            guard let env = appEnvironment else { return }
+            Task { await env.threadService.refresh() }
         }
     }
 
@@ -66,5 +85,19 @@ struct ConversationsView: View {
     private func setupViewModel() {
         guard viewModel == nil, let env = appEnvironment else { return }
         viewModel = ConversationsViewModel(threadService: env.threadService)
+    }
+
+    private func macStatusIndicator(env: AppEnvironment) -> some View {
+        HStack(spacing: 6) {
+            let count = env.peerService.nearbyPeers.count
+            Circle()
+                .fill(count > 0 ? Color.green : BaylanTheme.textTertiary)
+                .frame(width: 7, height: 7)
+                .shadow(color: count > 0 ? Color.green.opacity(0.6) : .clear, radius: 4)
+            Text(count == 0 ? "No nearby devices" : "\(count) devices in mesh")
+                .font(.caption)
+                .foregroundStyle(BaylanTheme.textSecondary)
+        }
+        .animation(.spring(response: 0.3), value: env.peerService.nearbyPeers.count)
     }
 }

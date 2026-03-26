@@ -4,6 +4,8 @@ public enum MeshEvent: Sendable {
     case messageReceived(Message)
     case presenceReceived(Identity)
     case ackReceived(messageId: String, senderId: String)
+    /// Forwarded from transport — `peerId` is the MCPeerID displayName (== identity.displayId)
+    case connectionStateChanged(peerId: String, state: ConnectionState)
 }
 
 public protocol MeshRouterProtocol: Sendable {

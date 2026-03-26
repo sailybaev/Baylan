@@ -3,6 +3,7 @@ import BaylanCore
 
 struct FloatingInputBar: View {
     @Binding var text: String
+    var isSendDisabled: Bool = false
     let onSend: () -> Void
 
     @FocusState private var isFocused: Bool
@@ -40,7 +41,7 @@ struct FloatingInputBar: View {
                     .clipShape(Circle())
                     .animation(.spring(response: 0.2), value: text.isEmpty)
             }
-            .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSendDisabled)
         }
         .padding(.horizontal, BaylanSpacing.md)
         .padding(.vertical, BaylanSpacing.sm)

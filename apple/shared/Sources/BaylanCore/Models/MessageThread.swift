@@ -13,6 +13,9 @@ public struct MessageThread: Identifiable, Sendable {
     public var lastMessage: Message?
     public var unreadCount: Int
     public var updatedAt: Date
+    
+    /// Optional assigned name of the peer, used for display.
+    public var peerName: String?
 
     public var isNearbyChannel: Bool {
         threadId == MessageThread.nearbyThreadId
@@ -20,7 +23,7 @@ public struct MessageThread: Identifiable, Sendable {
 
     /// Human-readable name shown in the conversation list.
     public var displayName: String {
-        isNearbyChannel ? "Nearby" : String(peerId.prefix(8))
+        isNearbyChannel ? "Nearby" : (peerName ?? String(peerId.prefix(8)))
     }
 
     public init(
@@ -29,7 +32,8 @@ public struct MessageThread: Identifiable, Sendable {
         conversationType: ConversationType,
         lastMessage: Message? = nil,
         unreadCount: Int = 0,
-        updatedAt: Date = Date()
+        updatedAt: Date = Date(),
+        peerName: String? = nil
     ) {
         self.threadId = threadId
         self.peerId = peerId
@@ -37,6 +41,7 @@ public struct MessageThread: Identifiable, Sendable {
         self.lastMessage = lastMessage
         self.unreadCount = unreadCount
         self.updatedAt = updatedAt
+        self.peerName = peerName
     }
 
     /// Pre-built nearby channel thread, always available.

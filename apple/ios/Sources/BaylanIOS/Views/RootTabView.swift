@@ -16,37 +16,12 @@ struct RootTabView: View {
 
     private var iosBody: some View {
         tabView
-            .safeAreaInset(edge: .top, spacing: 0) {
-                if let env {
-                    ConnectionStatusBanner(connectedCount: env.peerService.connectedPeerCount)
-                        .padding(.top, 4)
-                }
-            }
     }
 
     // MARK: - Mac Catalyst: sidebar on the left, status in toolbar
 
     private var macBody: some View {
         tabView
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
-                    macStatusIndicator
-                }
-            }
-    }
-
-    private var macStatusIndicator: some View {
-        HStack(spacing: 6) {
-            let count = env?.peerService.connectedPeerCount ?? 0
-            Circle()
-                .fill(count > 0 ? Color.green : BaylanTheme.textTertiary)
-                .frame(width: 7, height: 7)
-                .shadow(color: count > 0 ? Color.green.opacity(0.6) : .clear, radius: 4)
-            Text(count == 0 ? "No nearby devices" : "\(count) nearby")
-                .font(.caption)
-                .foregroundStyle(BaylanTheme.textSecondary)
-        }
-        .animation(.spring(response: 0.3), value: env?.peerService.connectedPeerCount)
     }
 
     // MARK: - Shared tab structure

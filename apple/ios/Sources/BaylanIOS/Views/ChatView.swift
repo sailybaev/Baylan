@@ -10,6 +10,12 @@ struct ChatView: View {
     @State private var scrollProxy: ScrollViewProxy?
 
     private var isNearby: Bool { threadId == MessageThread.nearbyThreadId }
+    
+    private var isConnected: Bool {
+        if isNearby { return true }
+        guard let peerId = viewModel?.thread?.peerId else { return false }
+        return appEnvironment.peerService.connectedPeerIds.contains(peerId)
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -17,13 +23,19 @@ struct ChatView: View {
 
             VStack(spacing: 0) {
                 messagesArea
-                FloatingInputBar(text: $inputText, onSend: sendMessage)
+
+                FloatingInputBar(text: $inputText, isSendDisabled: !isConnected, onSend: sendMessage)
             }
         }
         .navigationTitle(navTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar { toolbarContent }
+        .toolbar(.hidden, for: .tabBar)
         .task { await loadViewModel() }
+        .onChange(of: appEnvironment.messageService.lastIncomingMessageAt) { _, _ in
+            guard let vm = viewModel else { return }
+            Task { await vm.loadMessages() }
+        }
     }
 
     private var navTitle: String {
@@ -98,8 +110,7 @@ struct ChatView: View {
     }
 
     private func senderName(for senderId: String, in vm: ChatViewModel) -> String {
-        vm.messages.first { $0.senderId == senderId }
-            .map { _ in String(senderId.prefix(8)) } ?? String(senderId.prefix(8))
+        vm.participantNames[senderId] ?? String(senderId.prefix(8))
     }
 
     @ToolbarContentBuilder
@@ -109,11 +120,22 @@ struct ChatView: View {
                 Text(navTitle)
                     .font(BaylanTypography.headline)
                     .foregroundStyle(BaylanTheme.textPrimary)
+                
                 if isNearby {
-                    let count = appEnvironment.peerService.connectedPeerCount
-                    Text(count == 0 ? "No nearby devices" : "\(count) nearby")
+                    let count = appEnvironment.peerService.nearbyPeers.count
+                    Text(count == 0 ? "0 devices in mesh" : "\(count) devices in mesh")
                         .font(BaylanTypography.caption2)
                         .foregroundStyle(count > 0 ? BaylanTheme.accent : BaylanTheme.textTertiary)
+                } else if let peerId = viewModel?.thread?.peerId {
+                    if let peer = appEnvironment.peerService.nearbyPeers.first(where: { $0.identity.userId == peerId }) {
+                        Text("Reachable • \(peer.distanceLabel)")
+                            .font(BaylanTypography.caption2)
+                            .foregroundStyle(BaylanTheme.accent)
+                    } else {
+                        Text("Offline")
+                            .font(BaylanTypography.caption2)
+                            .foregroundStyle(BaylanTheme.textTertiary)
+                    }
                 }
             }
         }

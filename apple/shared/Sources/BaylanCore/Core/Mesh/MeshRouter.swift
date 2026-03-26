@@ -5,10 +5,20 @@ import SwiftProtobuf
 /// applies routing rules (verify → dedup → TTL → deliver/relay), and emits domain events.
 public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
 
-    // MARK: - Events stream
+    // MARK: - Broadcaster (fan-out — supports multiple independent subscribers)
 
-    public let events: AsyncStream<MeshEvent>
-    private let eventContinuation: AsyncStream<MeshEvent>.Continuation
+    private let broadcaster = MeshEventBroadcaster()
+
+    /// Subscribe to get an independent stream of mesh events.
+    /// Each caller gets its own AsyncStream — every event is delivered to every subscriber.
+    /// Use this instead of `.events` when more than one consumer is needed.
+    public func subscribe() -> AsyncStream<MeshEvent> {
+        broadcaster.subscribe()
+    }
+
+    /// Single-consumer stream kept for `MeshRouterProtocol` conformance.
+    /// If you need a second consumer, call `subscribe()` instead.
+    public nonisolated(unsafe) var events: AsyncStream<MeshEvent> = AsyncStream { _ in }
 
     // MARK: - Dependencies
 
@@ -19,6 +29,15 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
     private let signingPrivateKey: Data
     /// Maps user_id → Identity for signature verification. Updated by PeerService.
     private var knownPeers: [String: Identity] = [:]
+
+    // MARK: - Send Queue
+
+    private struct QueuedEnvelope: Sendable {
+        let envelope: BaylanMeshEnvelope
+        let created: Date
+    }
+    private var sendQueue: [QueuedEnvelope] = []
+
     private let lock = NSLock()
 
     // MARK: - Lifecycle
@@ -36,20 +55,18 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
         self.localUserId = localUserId
         self.crypto = crypto
         self.signingPrivateKey = signingPrivateKey
-
-        var continuation: AsyncStream<MeshEvent>.Continuation!
-        self.events = AsyncStream { continuation = $0 }
-        self.eventContinuation = continuation
     }
 
     deinit {
-        eventContinuation.finish()
         routingTask?.cancel()
+        Task { [broadcaster] in await broadcaster.finish() }
     }
 
     // MARK: - MeshRouterProtocol
 
     public func start() async {
+        // Wire up the protocol-conformance events stream as one subscription
+        events = broadcaster.subscribe()
         await transport.startAdvertising()
         await transport.startBrowsing()
         routingTask = Task { [weak self] in
@@ -72,10 +89,22 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
     }
 
     public func send(_ envelope: BaylanMeshEnvelope) async throws {
-        let data = try envelope.serializedData()
+        let isDirect = envelope.conversationType == .direct
+        let targetId = envelope.recipientID
         let peers = await transport.connectedPeerIds()
-        for peerId in peers {
-            try await transport.send(data, to: peerId)
+
+        if isDirect && targetId != "nearby" {
+            if peers.contains(targetId) {
+                let data = try envelope.serializedData()
+                try await transport.send(data, to: targetId)
+            } else {
+                lock.withLock { sendQueue.append(QueuedEnvelope(envelope: envelope, created: Date())) }
+            }
+        } else {
+            let data = try envelope.serializedData()
+            for peerId in peers {
+                try? await transport.send(data, to: peerId)
+            }
         }
     }
 
@@ -96,8 +125,36 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
         case .dataReceived(let data, let fromPeerId):
             guard let envelope = try? BaylanMeshEnvelope(serializedBytes: data) else { return }
             await process(envelope: envelope, fromPeerId: fromPeerId)
-        case .peerFound, .peerLost, .connectionStateChanged:
+        case .connectionStateChanged(let peerId, let state):
+            if state == .connected {
+                await drainQueue()
+            }
+            await broadcaster.yield(.connectionStateChanged(peerId: peerId, state: state))
+        case .peerFound, .peerLost:
             break
+        }
+    }
+
+    private func drainQueue() async {
+        let validPeers = await transport.connectedPeerIds()
+        guard !validPeers.isEmpty else { return }
+
+        let now = Date()
+        let toFlush = lock.withLock { () -> [QueuedEnvelope] in
+            let valid = sendQueue.filter { now.timeIntervalSince($0.created) < 86400 }
+            sendQueue = []
+            return valid
+        }
+
+        for item in toFlush {
+            let targetId = item.envelope.recipientID
+            if validPeers.contains(targetId) {
+                if let data = try? item.envelope.serializedData() {
+                    try? await transport.send(data, to: targetId)
+                }
+            } else {
+                lock.withLock { sendQueue.append(item) }
+            }
         }
     }
 
@@ -106,12 +163,11 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
         // 1. Signature verification — only if we know the sender's public key
         let senderIdentity = lock.withLock { knownPeers[envelope.senderID] }
         if let identity = senderIdentity {
-            let signingPubKey = identity.publicKey.prefix(32) // first 32 bytes = signing key
+            let signingPubKey = identity.publicKey.prefix(32)
             guard (try? EnvelopeBuilder.verifySignature(of: envelope, senderPublicKey: signingPubKey, crypto: crypto)) == true else {
-                return // Drop: invalid signature
+                return
             }
         }
-        // (If we don't know the sender yet, allow message through — discovered via presence)
 
         // 2. Duplicate check
         let messageId = envelope.messageID
@@ -129,7 +185,6 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
 
         if isForMe {
             await deliverToInbox(mutableEnvelope)
-            // Send ACK back to sender
             if let ack = try? EnvelopeBuilder.buildAck(
                 originalMessageId: messageId,
                 senderId: localUserId,
@@ -144,7 +199,6 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
 
         if isNearby {
             await deliverToInbox(mutableEnvelope)
-            // Fall through to relay if TTL allows
         }
 
         // 5. Relay to all connected peers except original sender
@@ -169,7 +223,7 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
                 lastSeen: Date(),
                 verified: false
             )
-            eventContinuation.yield(.presenceReceived(identity))
+            await broadcaster.yield(.presenceReceived(identity))
             return
         }
 
@@ -177,7 +231,7 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
         if let msgPayload = try? BaylanMessagePayload(serializedBytes: envelope.payload),
            msgPayload.type == .ack {
             let ackMsgId = envelope.messageID
-            eventContinuation.yield(.ackReceived(messageId: ackMsgId, senderId: envelope.senderID))
+            await broadcaster.yield(.ackReceived(messageId: ackMsgId, senderId: envelope.senderID))
             return
         }
 
@@ -197,8 +251,6 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
            let payload = try? BaylanMessagePayload(serializedBytes: envelope.payload) {
             body = payload.body.isEmpty ? nil : payload.body
         } else {
-            // Direct messages are encrypted — decryption happens in MessageService
-            // Emit raw message with nil body; MessageService decrypts and repopulates
             body = nil
         }
 
@@ -210,8 +262,9 @@ public final class MeshRouter: MeshRouterProtocol, @unchecked Sendable {
             type: .text,
             state: .delivered,
             createdAt: Date(timeIntervalSince1970: Double(envelope.createdAt) / 1000),
-            hopCount: Int(envelope.hopCount)
+            hopCount: Int(envelope.hopCount),
+            payload: envelope.conversationType == .direct ? envelope.payload : nil
         )
-        eventContinuation.yield(.messageReceived(message))
+        await broadcaster.yield(.messageReceived(message))
     }
 }

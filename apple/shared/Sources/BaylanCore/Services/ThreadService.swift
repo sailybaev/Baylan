@@ -8,6 +8,8 @@ public final class ThreadService {
     // MARK: - Published state
 
     public private(set) var threads: [MessageThread] = []
+    
+    private var nameCache: [String: String] = [:]
 
     // MARK: - Dependencies
 
@@ -36,6 +38,20 @@ public final class ThreadService {
                     fetched.insert(nearby, at: 0)
                 }
             }
+            
+            // Populate peer names
+            for i in 0..<fetched.count {
+                if !fetched[i].isNearbyChannel {
+                    let peerId = fetched[i].peerId
+                    if let cachedName = nameCache[peerId] {
+                        fetched[i].peerName = cachedName
+                    } else if let identity = try? await repository.identity(for: peerId) {
+                        nameCache[peerId] = identity.displayName
+                        fetched[i].peerName = identity.displayName
+                    }
+                }
+            }
+            
             threads = fetched
         } catch {
             // Non-fatal: threads remain empty until next load
@@ -80,5 +96,13 @@ public final class ThreadService {
     /// Call this when a new message arrives to refresh the thread list.
     public func refresh() async {
         await loadThreads()
+    }
+    
+    /// Updates the in-memory cache for a peer's display name and immediately propagates it to active threads.
+    public func updateCache(peerId: String, name: String) {
+        nameCache[peerId] = name
+        if let idx = threads.firstIndex(where: { $0.peerId == peerId && $0.peerName != name }) {
+            threads[idx].peerName = name
+        }
     }
 }

@@ -42,7 +42,7 @@ public final class AppEnvironment {
         let identityService = try IdentityService(identityStore: identityStore)
 
         let transport = MultipeerTransport(
-            displayName: identityService.localIdentity.displayId
+            displayName: identityService.localIdentity.userId
         )
         let meshRouter = MeshRouter(
             transport: transport,

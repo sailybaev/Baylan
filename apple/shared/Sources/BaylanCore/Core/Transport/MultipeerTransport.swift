@@ -24,7 +24,6 @@ public final class MultipeerTransport: NSObject, TransportProtocol, @unchecked S
 
     // MARK: - State
 
-    private var connectedPeers: Set<String> = []
     private let lock = NSLock()
 
     // MARK: - Init
@@ -39,7 +38,7 @@ public final class MultipeerTransport: NSObject, TransportProtocol, @unchecked S
         self.session = MCSession(
             peer: localPeerId,
             securityIdentity: nil,
-            encryptionPreference: .optional
+            encryptionPreference: .required
         )
         self.advertiser = MCNearbyServiceAdvertiser(
             peer: localPeerId,
@@ -64,6 +63,7 @@ public final class MultipeerTransport: NSObject, TransportProtocol, @unchecked S
     // MARK: - TransportProtocol
 
     public func startAdvertising() async {
+        print("[Baylan][MC] startAdvertising — localPeer=\(localPeerId.displayName)")
         advertiser.startAdvertisingPeer()
     }
 
@@ -72,6 +72,7 @@ public final class MultipeerTransport: NSObject, TransportProtocol, @unchecked S
     }
 
     public func startBrowsing() async {
+        print("[Baylan][MC] startBrowsing — localPeer=\(localPeerId.displayName)")
         browser.startBrowsingForPeers()
     }
 
@@ -81,8 +82,15 @@ public final class MultipeerTransport: NSObject, TransportProtocol, @unchecked S
 
     public func send(_ data: Data, to peerId: String) async throws {
         let peers = session.connectedPeers.filter { $0.displayName == peerId }
-        guard !peers.isEmpty else { return }
-        try session.send(data, toPeers: peers, with: .reliable)
+        guard !peers.isEmpty else {
+            print("[Baylan][MC] send skipped — \(peerId) not in session.connectedPeers")
+            return
+        }
+        do {
+            try session.send(data, toPeers: peers, with: .reliable)
+        } catch {
+            print("[Baylan][MC] send error to \(peerId): \(error)")
+        }
     }
 
     public func disconnect(_ peerId: String) async {
@@ -99,20 +107,25 @@ public final class MultipeerTransport: NSObject, TransportProtocol, @unchecked S
 extension MultipeerTransport: MCSessionDelegate {
 
     public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        let stateName: String
         let connectionState: ConnectionState
         switch state {
-        case .connecting:  connectionState = .connecting
-        case .connected:   connectionState = .connected
-        case .notConnected: connectionState = .disconnected
-        @unknown default:  connectionState = .disconnected
+        case .connecting:
+            stateName = "connecting"
+            connectionState = .connecting
+        case .connected:
+            stateName = "connected ✅"
+            connectionState = .connected
+        case .notConnected:
+            stateName = "notConnected ❌"
+            connectionState = .disconnected
+        @unknown default:
+            stateName = "unknown"
+            connectionState = .disconnected
         }
-        lock.withLock {
-            if state == .connected {
-                connectedPeers.insert(peerID.displayName)
-            } else {
-                connectedPeers.remove(peerID.displayName)
-            }
-        }
+        print("[Baylan][MC] peer \(peerID.displayName) → \(stateName)")
+        print("[Baylan][MC] all connected peers: \(session.connectedPeers.map(\.displayName))")
+
         continuation.yield(.connectionStateChanged(peerId: peerID.displayName, state: connectionState))
         if state == .notConnected {
             continuation.yield(.peerLost(peerId: peerID.displayName))
@@ -133,12 +146,20 @@ extension MultipeerTransport: MCSessionDelegate {
 extension MultipeerTransport: MCNearbyServiceAdvertiserDelegate {
 
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        // Auto-accept all invitations in mesh mode
+        // Decline if already connected — prevents duplicate connections when both sides
+        // simultaneously send invites and both accept, causing two connections to the same peer.
+        let alreadyConnected = session.connectedPeers.contains { $0.displayName == peerID.displayName }
+        if alreadyConnected {
+            print("[Baylan][MC] \(peerID.displayName.prefix(8)) already connected — declining duplicate invite")
+            invitationHandler(false, nil)
+            return
+        }
+        print("[Baylan][MC] received invitation from \(peerID.displayName.prefix(8)) — accepting")
         invitationHandler(true, session)
     }
 
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: any Error) {
-        print("[Baylan] Advertiser failed: \(error)")
+        print("[Baylan][MC] advertiser failed: \(error)")
     }
 }
 
@@ -147,16 +168,25 @@ extension MultipeerTransport: MCNearbyServiceAdvertiserDelegate {
 extension MultipeerTransport: MCNearbyServiceBrowserDelegate {
 
     public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
+        print("[Baylan][MC] foundPeer \(peerID.displayName) — session peers: \(session.connectedPeers.map(\.displayName))")
         continuation.yield(.peerFound(PeerInfo(peerId: peerID.displayName, displayName: peerID.displayName)))
-        // Auto-invite: no UI confirmation needed in mesh mode
+
+        // Skip invite if peer is already in our session
+        let alreadyConnected = session.connectedPeers.contains { $0.displayName == peerID.displayName }
+        guard !alreadyConnected else {
+            print("[Baylan][MC] \(peerID.displayName) already in session — skipping invite")
+            return
+        }
+        print("[Baylan][MC] inviting \(peerID.displayName)")
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30)
     }
 
     public func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        print("[Baylan][MC] lostPeer \(peerID.displayName)")
         continuation.yield(.peerLost(peerId: peerID.displayName))
     }
 
     public func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: any Error) {
-        print("[Baylan] Browser failed: \(error)")
+        print("[Baylan][MC] browser failed: \(error)")
     }
 }

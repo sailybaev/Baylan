@@ -7,6 +7,7 @@ public final class ChatViewModel {
 
     public private(set) var messages: [Message] = []
     public private(set) var thread: MessageThread?
+    public private(set) var participantNames: [String: String] = [:]
     public var isLoading = false
 
     public let threadId: UUID
@@ -31,10 +32,32 @@ public final class ChatViewModel {
     }
 
     public func loadMessages() async {
-        isLoading = true
+        if messages.isEmpty {
+            isLoading = true
+        }
         defer { isLoading = false }
         messages = (try? await repository.messages(forThread: threadId)) ?? []
-        thread = (try? await repository.thread(forId: threadId))
+        
+        var loadedThread = try? await repository.thread(forId: threadId)
+        if let t = loadedThread, !t.isNearbyChannel {
+             if let identity = try? await repository.identity(for: t.peerId) {
+                 loadedThread?.peerName = identity.displayName
+                 threadService.updateCache(peerId: t.peerId, name: identity.displayName)
+             }
+        }
+        thread = loadedThread
+        
+        // Load names for all participants in the thread
+        var names: [String: String] = [:]
+        let uniquePeers = Set(messages.map(\.senderId))
+        for peer in uniquePeers {
+            if let identity = try? await repository.identity(for: peer) {
+                names[peer] = identity.displayName
+                threadService.updateCache(peerId: peer, name: identity.displayName)
+            }
+        }
+        participantNames = names
+        
         await threadService.markAsRead(threadId)
     }
 

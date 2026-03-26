@@ -4,11 +4,12 @@ public struct Message: Identifiable, Sendable, Codable {
     public var id: UUID { messageId }
 
     public let messageId: UUID
-    public let threadId: UUID
+    public var threadId: UUID
     public let senderId: String
     public let recipientId: String
-    public let body: String?
-    public let type: BaylanMessageKind
+    public var body: String?
+    public var type: BaylanMessageKind
+    public var payload: Data?
     public var state: DeliveryState
     public let createdAt: Date
     public var deliveredAt: Date?
@@ -24,7 +25,8 @@ public struct Message: Identifiable, Sendable, Codable {
         state: DeliveryState = .sending,
         createdAt: Date = Date(),
         deliveredAt: Date? = nil,
-        hopCount: Int = 0
+        hopCount: Int = 0,
+        payload: Data? = nil
     ) {
         self.messageId = messageId
         self.threadId = threadId
@@ -36,5 +38,6 @@ public struct Message: Identifiable, Sendable, Codable {
         self.createdAt = createdAt
         self.deliveredAt = deliveredAt
         self.hopCount = hopCount
+        self.payload = payload
     }
 }

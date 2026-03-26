@@ -9,6 +9,8 @@ public final class PeerService {
 
     public private(set) var nearbyPeers: [Peer] = []
     public private(set) var connectedPeerCount: Int = 0
+    /// Set of full userIds currently in MCSession .connected state.
+    public private(set) var connectedPeerIds: Set<String> = []
 
     public var connectionStatusText: String {
         if connectedPeerCount == 0 {
@@ -71,7 +73,8 @@ public final class PeerService {
     private func startListeningToMeshEvents() {
         eventTask = Task { [weak self] in
             guard let self else { return }
-            for await event in meshRouter.events {
+            let stream = meshRouter.subscribe()
+            for await event in stream {
                 guard !Task.isCancelled else { break }
                 await MainActor.run {
                     self.handle(meshEvent: event)
@@ -85,6 +88,24 @@ public final class PeerService {
         case .presenceReceived(let identity):
             upsertPeer(identity)
             Task { try? await repository.saveIdentity(identity) }
+        case .connectionStateChanged(let peerId, let state):
+            // peerId is now the full userId (MCPeerID displayName == identity.userId)
+            let isConnected = state == .connected
+            if isConnected {
+                connectedPeerIds.insert(peerId)
+            } else {
+                connectedPeerIds.remove(peerId)
+            }
+            if let idx = nearbyPeers.firstIndex(where: { $0.identity.userId == peerId }) {
+                nearbyPeers[idx] = Peer(
+                    identity: nearbyPeers[idx].identity,
+                    isConnected: isConnected,
+                    lastPresence: nearbyPeers[idx].lastPresence,
+                    signalStrength: nearbyPeers[idx].signalStrength
+                )
+            }
+            connectedPeerCount = nearbyPeers.filter { $0.isConnected }.count
+            print("[Baylan][PeerService] \(String(peerId.prefix(8))) isConnected=\(isConnected) — connectedPeerCount=\(connectedPeerCount)")
         case .messageReceived, .ackReceived:
             break
         }
