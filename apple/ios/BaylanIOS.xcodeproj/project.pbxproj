@@ -1,0 +1,594 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00F76DF36357E54C96D7D488 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451485D61542FE4DC2F5C8A0 /* AvatarView.swift */; };
+		117A4FE5D7FA4E80D9F55FEA /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75CC9E952AF9D42454D4BA1 /* ConversationsView.swift */; };
+		1FDBD552D5BCAD710220C1F0 /* DeliveryStateIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F1B138C69C401A6F1753D1 /* DeliveryStateIndicator.swift */; };
+		202CB173604177346000D37F /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B503C7ADCB4D939E88145 /* RootTabView.swift */; };
+		5BF387D87E762574AAEC7734 /* BaylanIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB6B171B7095E94A2904D02 /* BaylanIOSTests.swift */; };
+		670149C25A12FE93015547B8 /* IdentityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0718EAEF37005E9630847CF0 /* IdentityView.swift */; };
+		684275777FF2955F4317F41C /* DiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D5EFC9271847B8344B1DA /* DiscoveryView.swift */; };
+		704C7C6BCD2015874F05F673 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C03DE9DC7A61F170739E234 /* MessageBubble.swift */; };
+		79DD8B29D80C09CFA03FE4D3 /* BaylanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AF3AFA58F1A50F32448A55 /* BaylanApp.swift */; };
+		843D30E1DA70D4241763115C /* FloatingInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254F92CFB07E695A5B6AC99 /* FloatingInputBar.swift */; };
+		96C8C0C350877D2339745C66 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2515B9FAAA3C43364EC93E2 /* EmptyStateView.swift */; };
+		A3E0267406DD19CD7381F724 /* BaylanCore in Frameworks */ = {isa = PBXBuildFile; productRef = DC163CCF65F6BC84BADF5214 /* BaylanCore */; };
+		A9D48B3762D9793149D687FA /* QRCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D1B829986EC3D14F078A32 /* QRCodeGenerator.swift */; };
+		AE57BA46DF5C455C5EA10D7E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55B406709F4645BFA6D286F /* ChatView.swift */; };
+		B157676F420F2E8061CF8D78 /* PeerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB81CEF6EF40CEDA1204657 /* PeerRow.swift */; };
+		BE29ED24F845034CC6C320B4 /* ConnectionStatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F5ED283EEC7B3ACD998C2E /* ConnectionStatusBanner.swift */; };
+		C78596C620D770BEAC5ED5B0 /* PeerProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8089A0B65A26610D381BFAD /* PeerProfileView.swift */; };
+		C798987569384B254987FDF6 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DF6DEF19F16249B2523987 /* ConversationCell.swift */; };
+		E3D88EE42697397EF049040F /* UnreadBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C8D679B7966267E0A5C966 /* UnreadBadge.swift */; };
+		E73701E47A26F540304F6BF8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93692977AC886C48DB7A1575 /* SettingsView.swift */; };
+		EDDE27532CE1ED4AAA472E29 /* BaylanCore in Frameworks */ = {isa = PBXBuildFile; productRef = EDF62B72FE33557ADF78E936 /* BaylanCore */; };
+		F28AFE88D9E4C165781A0481 /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769597540781FA631A6B3ADA /* QRScannerView.swift */; };
+		FD2C206FEB364CA4A2C32D0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B080A7AA9740C7A1203D9878 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7E6B9A688107E90E8066F693 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A73ABF17DABA732A7F2C763 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B01C41E9D467236342BD9FEC;
+			remoteInfo = BaylanIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02F92CD121B03F4A79FB9483 /* Baylan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Baylan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0718EAEF37005E9630847CF0 /* IdentityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityView.swift; sourceTree = "<group>"; };
+		17AF3AFA58F1A50F32448A55 /* BaylanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaylanApp.swift; sourceTree = "<group>"; };
+		1AF19722AD234102490F324A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1BB6B171B7095E94A2904D02 /* BaylanIOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaylanIOSTests.swift; sourceTree = "<group>"; };
+		24F5ED283EEC7B3ACD998C2E /* ConnectionStatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusBanner.swift; sourceTree = "<group>"; };
+		2EBF12B2D2618BCB33D12488 /* shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shared; path = ../shared; sourceTree = SOURCE_ROOT; };
+		2FB81CEF6EF40CEDA1204657 /* PeerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerRow.swift; sourceTree = "<group>"; };
+		3C03DE9DC7A61F170739E234 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		451485D61542FE4DC2F5C8A0 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		51BF01C116BFB3559CEC8344 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		580B503C7ADCB4D939E88145 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		76166D7704827FE1EB6ED80C /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		769597540781FA631A6B3ADA /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
+		93692977AC886C48DB7A1575 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A75CC9E952AF9D42454D4BA1 /* ConversationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
+		B080A7AA9740C7A1203D9878 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5DF6DEF19F16249B2523987 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
+		B6F1B138C69C401A6F1753D1 /* DeliveryStateIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryStateIndicator.swift; sourceTree = "<group>"; };
+		C254F92CFB07E695A5B6AC99 /* FloatingInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingInputBar.swift; sourceTree = "<group>"; };
+		C6AC851737CBC5FB9CFD10A0 /* BaylanIOSTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; name = BaylanIOSTests.xctest; path = Baylan.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D01D5EFC9271847B8344B1DA /* DiscoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryView.swift; sourceTree = "<group>"; };
+		D7D1B829986EC3D14F078A32 /* QRCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerator.swift; sourceTree = "<group>"; };
+		E2515B9FAAA3C43364EC93E2 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		E55B406709F4645BFA6D286F /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		E8089A0B65A26610D381BFAD /* PeerProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerProfileView.swift; sourceTree = "<group>"; };
+		F3C8D679B7966267E0A5C966 /* UnreadBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadBadge.swift; sourceTree = "<group>"; };
+		F98EE54EB843654351A66397 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		FB663D59527CDF95033EA8B6 /* BaylanIOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BaylanIOS.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6E1985F2B91C3385CE444E77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDE27532CE1ED4AAA472E29 /* BaylanCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC61A0234AF0C726E15F8ACE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3E0267406DD19CD7381F724 /* BaylanCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16B52BE65473004450B23CBF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				85D83C0A2E5CFCCC4399D192 /* BaylanIOS */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		3212BF77D982786777335A57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02F92CD121B03F4A79FB9483 /* Baylan.app */,
+				C6AC851737CBC5FB9CFD10A0 /* BaylanIOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65D112B29DDDDD484F4F1A77 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				451485D61542FE4DC2F5C8A0 /* AvatarView.swift */,
+				24F5ED283EEC7B3ACD998C2E /* ConnectionStatusBanner.swift */,
+				B5DF6DEF19F16249B2523987 /* ConversationCell.swift */,
+				B6F1B138C69C401A6F1753D1 /* DeliveryStateIndicator.swift */,
+				E2515B9FAAA3C43364EC93E2 /* EmptyStateView.swift */,
+				C254F92CFB07E695A5B6AC99 /* FloatingInputBar.swift */,
+				3C03DE9DC7A61F170739E234 /* MessageBubble.swift */,
+				2FB81CEF6EF40CEDA1204657 /* PeerRow.swift */,
+				D7D1B829986EC3D14F078A32 /* QRCodeGenerator.swift */,
+				769597540781FA631A6B3ADA /* QRScannerView.swift */,
+				F3C8D679B7966267E0A5C966 /* UnreadBadge.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		85D83C0A2E5CFCCC4399D192 /* BaylanIOS */ = {
+			isa = PBXGroup;
+			children = (
+				8CED82BF4C0C76019A6C9C65 /* Resources */,
+				E9E72B0499D3A49E1F4BDB55 /* Views */,
+				17AF3AFA58F1A50F32448A55 /* BaylanApp.swift */,
+				FB663D59527CDF95033EA8B6 /* BaylanIOS.entitlements */,
+				1AF19722AD234102490F324A /* Info.plist */,
+			);
+			path = BaylanIOS;
+			sourceTree = "<group>";
+		};
+		8CED82BF4C0C76019A6C9C65 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F98EE54EB843654351A66397 /* .gitkeep */,
+				B080A7AA9740C7A1203D9878 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B23A1895FDCC52AFB8EE4FF5 = {
+			isa = PBXGroup;
+			children = (
+				C8902C22ED383726BF949E9B /* Packages */,
+				16B52BE65473004450B23CBF /* Sources */,
+				F2C94B78997706B878B35B61 /* Tests */,
+				3212BF77D982786777335A57 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C4D6D63C598646CB7D617D7A /* BaylanIOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				51BF01C116BFB3559CEC8344 /* .gitkeep */,
+				1BB6B171B7095E94A2904D02 /* BaylanIOSTests.swift */,
+			);
+			path = BaylanIOSTests;
+			sourceTree = "<group>";
+		};
+		C8902C22ED383726BF949E9B /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				2EBF12B2D2618BCB33D12488 /* shared */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		E9E72B0499D3A49E1F4BDB55 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65D112B29DDDDD484F4F1A77 /* Components */,
+				76166D7704827FE1EB6ED80C /* .gitkeep */,
+				E55B406709F4645BFA6D286F /* ChatView.swift */,
+				A75CC9E952AF9D42454D4BA1 /* ConversationsView.swift */,
+				D01D5EFC9271847B8344B1DA /* DiscoveryView.swift */,
+				0718EAEF37005E9630847CF0 /* IdentityView.swift */,
+				E8089A0B65A26610D381BFAD /* PeerProfileView.swift */,
+				580B503C7ADCB4D939E88145 /* RootTabView.swift */,
+				93692977AC886C48DB7A1575 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F2C94B78997706B878B35B61 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C4D6D63C598646CB7D617D7A /* BaylanIOSTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1FCF32A3BC6B2C2C3C489C18 /* BaylanIOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E00CE1AD9FF34701C530E0B3 /* Build configuration list for PBXNativeTarget "BaylanIOSTests" */;
+			buildPhases = (
+				C1A0E50512405B3A8B85ADEB /* Sources */,
+				CC61A0234AF0C726E15F8ACE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E5427DF390F7814A7FFCC0A /* PBXTargetDependency */,
+			);
+			name = BaylanIOSTests;
+			packageProductDependencies = (
+				DC163CCF65F6BC84BADF5214 /* BaylanCore */,
+			);
+			productName = BaylanIOSTests;
+			productReference = C6AC851737CBC5FB9CFD10A0 /* BaylanIOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B01C41E9D467236342BD9FEC /* BaylanIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 672B7040C3BDEB91E131065F /* Build configuration list for PBXNativeTarget "BaylanIOS" */;
+			buildPhases = (
+				37A0CF034965BA64EEFFD518 /* Sources */,
+				3C86B560FF38248126CED404 /* Resources */,
+				6E1985F2B91C3385CE444E77 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BaylanIOS;
+			packageProductDependencies = (
+				EDF62B72FE33557ADF78E936 /* BaylanCore */,
+			);
+			productName = BaylanIOS;
+			productReference = 02F92CD121B03F4A79FB9483 /* Baylan.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A73ABF17DABA732A7F2C763 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1700;
+			};
+			buildConfigurationList = 28ED51984058F1234D407529 /* Build configuration list for PBXProject "BaylanIOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B23A1895FDCC52AFB8EE4FF5;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				507D3D8C73EE4B667679FDF2 /* XCLocalSwiftPackageReference "../shared" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3212BF77D982786777335A57 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B01C41E9D467236342BD9FEC /* BaylanIOS */,
+				1FCF32A3BC6B2C2C3C489C18 /* BaylanIOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3C86B560FF38248126CED404 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD2C206FEB364CA4A2C32D0D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		37A0CF034965BA64EEFFD518 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00F76DF36357E54C96D7D488 /* AvatarView.swift in Sources */,
+				79DD8B29D80C09CFA03FE4D3 /* BaylanApp.swift in Sources */,
+				AE57BA46DF5C455C5EA10D7E /* ChatView.swift in Sources */,
+				BE29ED24F845034CC6C320B4 /* ConnectionStatusBanner.swift in Sources */,
+				C798987569384B254987FDF6 /* ConversationCell.swift in Sources */,
+				117A4FE5D7FA4E80D9F55FEA /* ConversationsView.swift in Sources */,
+				1FDBD552D5BCAD710220C1F0 /* DeliveryStateIndicator.swift in Sources */,
+				684275777FF2955F4317F41C /* DiscoveryView.swift in Sources */,
+				96C8C0C350877D2339745C66 /* EmptyStateView.swift in Sources */,
+				843D30E1DA70D4241763115C /* FloatingInputBar.swift in Sources */,
+				670149C25A12FE93015547B8 /* IdentityView.swift in Sources */,
+				704C7C6BCD2015874F05F673 /* MessageBubble.swift in Sources */,
+				C78596C620D770BEAC5ED5B0 /* PeerProfileView.swift in Sources */,
+				B157676F420F2E8061CF8D78 /* PeerRow.swift in Sources */,
+				A9D48B3762D9793149D687FA /* QRCodeGenerator.swift in Sources */,
+				F28AFE88D9E4C165781A0481 /* QRScannerView.swift in Sources */,
+				202CB173604177346000D37F /* RootTabView.swift in Sources */,
+				E73701E47A26F540304F6BF8 /* SettingsView.swift in Sources */,
+				E3D88EE42697397EF049040F /* UnreadBadge.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1A0E50512405B3A8B85ADEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BF387D87E762574AAEC7734 /* BaylanIOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8E5427DF390F7814A7FFCC0A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B01C41E9D467236342BD9FEC /* BaylanIOS */;
+			targetProxy = 7E6B9A688107E90E8066F693 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		096FF034368A3C4ED2F0CB4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.baylan.BaylanIOSTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BaylanIOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BaylanIOS";
+			};
+			name = Debug;
+		};
+		28861068BE3FE326C065FD34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/BaylanIOS/BaylanIOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = BKDA35QTAK;
+				INFOPLIST_FILE = Sources/BaylanIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.baylan.BaylanIOS;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F1EA6DC21CFF4A9B2891210 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/BaylanIOS/BaylanIOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = BKDA35QTAK;
+				INFOPLIST_FILE = Sources/BaylanIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.baylan.BaylanIOS;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B1506B7EFE470CA3E981D32B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Baylan;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		C6EF5122196A96E6BF915187 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.baylan.BaylanIOSTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BaylanIOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BaylanIOS";
+			};
+			name = Release;
+		};
+		EAA85590996CFF56091CD1CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = Baylan;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		28ED51984058F1234D407529 /* Build configuration list for PBXProject "BaylanIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1506B7EFE470CA3E981D32B /* Debug */,
+				EAA85590996CFF56091CD1CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		672B7040C3BDEB91E131065F /* Build configuration list for PBXNativeTarget "BaylanIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28861068BE3FE326C065FD34 /* Debug */,
+				2F1EA6DC21CFF4A9B2891210 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E00CE1AD9FF34701C530E0B3 /* Build configuration list for PBXNativeTarget "BaylanIOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				096FF034368A3C4ED2F0CB4C /* Debug */,
+				C6EF5122196A96E6BF915187 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		507D3D8C73EE4B667679FDF2 /* XCLocalSwiftPackageReference "../shared" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../shared;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DC163CCF65F6BC84BADF5214 /* BaylanCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BaylanCore;
+		};
+		EDF62B72FE33557ADF78E936 /* BaylanCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BaylanCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6A73ABF17DABA732A7F2C763 /* Project object */;
+}

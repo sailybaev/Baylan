@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package baylan.mesh.v1;
+
+option swift_prefix = "Baylan";
+
+// MeshEnvelope is the outer packet for all mesh routing.
+// Relay nodes read only the fields needed for routing decisions.
+// The payload is opaque (encrypted) to relay nodes — EXCEPT for
+// Nearby channel messages (recipient_id = "nearby"), which are plaintext.
+message MeshEnvelope {
+  string message_id   = 1;  // UUID string, globally unique
+  string sender_id    = 2;  // hex user_id of originator
+  string recipient_id = 3;  // hex user_id of destination, OR "nearby" for mesh broadcast
+  bytes  payload      = 4;  // encrypted MessagePayload (NaCl box) for direct; plaintext for nearby
+  uint32 ttl          = 5;  // decremented each hop; drop at 0 (nearby: max 3)
+  uint32 hop_count    = 6;  // incremented each hop
+  int64  created_at   = 7;  // unix epoch milliseconds
+  bytes  signature    = 8;  // Ed25519 signature over fields 1-7
+  ConversationType conversation_type = 9;
+}
+
+enum ConversationType {
+  DIRECT = 0;  // 1-on-1, encrypted payload
+  NEARBY = 1;  // public mesh broadcast, plaintext payload, TTL <= 3
+}
+
+// MessagePayload is the inner content, encrypted by the sender.
+// Only the intended recipient can decrypt and read this.
+message MessagePayload {
+  MessageType type      = 1;
+  string      body      = 2;  // UTF-8 text (for TEXT type)
+  int64       timestamp = 3;  // sender-side unix epoch milliseconds
+  string      thread_id = 4;  // UUID string
+}
+
+// PresenceAdvertisement is broadcast unencrypted for peer discovery.
+// TTL is kept low (2 hops) so it stays local.
+message PresenceAdvertisement {
+  string sender_id    = 1;
+  string display_name = 2;
+  bytes  public_key   = 3;  // raw Curve25519 public key bytes
+  int64  timestamp    = 4;
+}
+
+// DeliveryAck is sent by the recipient back to the sender.
+message DeliveryAck {
+  string message_id  = 1;
+  string sender_id   = 2;    // original message sender
+  int64  received_at = 3;
+}
+
+enum MessageType {
+  TEXT         = 0;
+  ACK          = 1;
+  PRESENCE     = 2;
+  KEY_EXCHANGE = 3;
+}
