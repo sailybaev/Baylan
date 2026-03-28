@@ -12,7 +12,7 @@ struct PeerRow: View {
                 showAccentRing: peer.isConnected
             )
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: BaylanSpacing.xs) {
                     Text(peer.identity.displayName)
                         .font(BaylanTypography.headline)
@@ -20,44 +20,54 @@ struct PeerRow: View {
 
                     if peer.identity.verified {
                         Image(systemName: "checkmark.seal.fill")
-                            .font(.system(size: 12))
+                            .font(.system(size: 11))
                             .foregroundStyle(BaylanTheme.accent)
                     }
                 }
 
-                Text(peer.identity.displayId)
-                    .font(BaylanTypography.caption)
-                    .foregroundStyle(BaylanTheme.textTertiary)
-                    .fontDesign(.monospaced)
+                HStack(spacing: BaylanSpacing.xs) {
+                    ConnectionDot(state: connectionState, size: 5)
+
+                    Text(subtitleText)
+                        .font(BaylanTypography.caption)
+                        .foregroundStyle(BaylanTheme.textSecondary)
+                }
             }
 
             Spacer(minLength: 0)
 
-            signalBars
-        }
-        .padding(.horizontal, BaylanSpacing.md)
-        .padding(.vertical, BaylanSpacing.sm)
-        .background(BaylanTheme.surface)
-        .clipShape(RoundedRectangle(cornerRadius: BaylanSpacing.cornerRadiusSmall))
-    }
-
-    private var signalBars: some View {
-        HStack(alignment: .bottom, spacing: 2) {
-            ForEach(0..<4, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 1)
-                    .fill(index < signalLevel ? BaylanTheme.accent : BaylanTheme.surfaceElevated)
-                    .frame(width: 4, height: CGFloat(6 + index * 4))
+            if peer.isConnected {
+                SignalBars(strength: peer.signalStrength)
             }
         }
+        .padding(.horizontal, BaylanSpacing.md)
+        .padding(.vertical, BaylanSpacing.sm + 2)
+        .background(BaylanTheme.surface)
+        .clipShape(RoundedRectangle(cornerRadius: BaylanSpacing.cornerRadius))
     }
 
-    private var signalLevel: Int {
-        guard let strength = peer.signalStrength else { return 2 }
-        switch strength {
-        case ..<(-80): return 1
-        case (-80)..<(-65): return 2
-        case (-65)..<(-50): return 3
-        default: return 4
+    private var connectionState: ConnectionState {
+        guard peer.isConnected else { return .disconnected }
+        guard let s = peer.signalStrength else { return .connected }
+        return s < 0.25 ? .weak : .connected
+    }
+
+    private var subtitleText: String {
+        if peer.isConnected {
+            return peer.distanceLabel
+        } else if let last = peer.lastPresence {
+            return "Last seen \(last.relativeFromNow)"
+        } else {
+            return "Not seen"
         }
+    }
+}
+
+private extension Date {
+    var relativeFromNow: String {
+        let seconds = Int(-timeIntervalSinceNow)
+        if seconds < 60 { return "just now" }
+        if seconds < 3600 { return "\(seconds / 60)m ago" }
+        return "\(seconds / 3600)h ago"
     }
 }

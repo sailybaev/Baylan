@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!--
+    PULSE v1 — Original
+    Center node + two concentric horseshoe arcs.
+    Arcs are 270° sweeps open at the bottom.
+    Endpoints of each arc sit at ±45° below horizontal.
+  -->
+  <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+
+  <!-- Outer arc  r=26 — endpoints at 225° and 315° from center -->
+  <!-- (50 ± 18.38, 50 + 18.38)  = (31.62, 68.38) and (68.38, 68.38) -->
+  <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38"
+        fill="none" stroke="white" stroke-width="2.5"
+        stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Inner arc  r=15 — endpoints at 225° and 315° from center -->
+  <!-- (50 ± 10.61, 50 + 10.61) = (39.39, 60.61) and (60.61, 60.61) -->
+  <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61"
+        fill="none" stroke="white" stroke-width="3.5"
+        stroke-linecap="round"/>
+
+  <!-- Center node -->
+  <circle cx="50" cy="50" r="5.5" fill="white"/>
+</svg>

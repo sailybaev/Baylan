@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bayla — Logo Concepts</title>
+<style>
+  :root {
+    --bg: #F5F5F7;
+    --text: #1D1D1F;
+    --sub: #6E6E73;
+    --border: #D2D2D7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 60px 40px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  header h1 {
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  header p {
+    font-size: 17px;
+    color: var(--sub);
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sub);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── MAIN CONCEPTS ── */
+  .concepts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  .card svg {
+    border-radius: 22px;
+    display: block;
+  }
+
+  .card-meta {
+    width: 100%;
+  }
+
+  .card-meta .name {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+
+  .card-meta .tagline {
+    font-size: 13px;
+    color: var(--sub);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .card-meta .detail {
+    font-size: 12px;
+    color: var(--sub);
+    line-height: 1.6;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    margin: 3px 3px 3px 0;
+    color: var(--text);
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+    display: inline-block;
+  }
+
+  /* ── SIZES ── */
+  .sizes-grid {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+  }
+
+  .sizes-block {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 32px;
+    flex: 1;
+    min-width: 280px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  .sizes-block h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--sub);
+  }
+
+  .size-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .size-label {
+    font-size: 11px;
+    color: var(--sub);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ── MONO ── */
+  .mono-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 64px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  .mono-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mono-cell span {
+    font-size: 10px;
+    color: var(--sub);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATION NOTES ── */
+  .anim-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .anim-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+
+  .anim-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .anim-card p {
+    font-size: 13px;
+    color: var(--sub);
+    line-height: 1.55;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Bayla</h1>
+  <p>Logo Concepts — Offline Mesh Messaging</p>
+</header>
+
+<!-- MAIN CONCEPTS -->
+<p class="section-title">Three Directions</p>
+<div class="concepts">
+
+  <!-- CONCEPT 1: PULSE -->
+  <div class="card">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+      <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38"
+            fill="none" stroke="white" stroke-width="2.5"
+            stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61"
+            fill="none" stroke="white" stroke-width="3.5"
+            stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+    </svg>
+
+    <div class="card-meta">
+      <div class="name">01 — Pulse</div>
+      <div class="tagline">A single node broadcasting outward through two concentric arcs. The horseshoe shape avoids the WiFi cliché — this is not a router, it's a peer.</div>
+
+      <div>
+        <span class="pill"><span class="swatch" style="background:#1C1C1E"></span> #1C1C1E</span>
+        <span class="pill"><span class="swatch" style="background:white; border-color:#ccc"></span> White</span>
+      </div>
+
+      <div class="detail" style="margin-top:12px">
+        <strong>Elements:</strong> 1 circle (center node) + 2 arcs (270° sweep, open at bottom)<br>
+        <strong>Stroke:</strong> round linecap, 3.5px inner / 2.5px outer<br>
+        <strong>Feel:</strong> Radar. Broadcasting. Calm authority.
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 2: TRIAD -->
+  <div class="card">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+      <rect width="100" height="100" rx="22" fill="#007AFF"/>
+      <line x1="50"   y1="28" x2="30.9" y2="61"
+            stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <line x1="30.9" y1="61" x2="69.1" y2="61"
+            stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <line x1="69.1" y1="61" x2="50"   y2="28"
+            stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="50"   cy="28" r="5.5" fill="white"/>
+      <circle cx="30.9" cy="61" r="5.5" fill="white"/>
+      <circle cx="69.1" cy="61" r="5.5" fill="white"/>
+    </svg>
+
+    <div class="card-meta">
+      <div class="name">02 — Triad</div>
+      <div class="tagline">Three equal peers forming a closed triangle. No hierarchy, no center — pure mesh. The most honest diagram of decentralized communication.</div>
+
+      <div>
+        <span class="pill"><span class="swatch" style="background:#007AFF"></span> #007AFF</span>
+        <span class="pill"><span class="swatch" style="background:white; border-color:#ccc"></span> White</span>
+      </div>
+
+      <div class="detail" style="margin-top:12px">
+        <strong>Elements:</strong> 3 circles (r=5.5) + 3 lines at 60% opacity<br>
+        <strong>Triangle:</strong> equilateral, circumradius=22, one vertex up<br>
+        <strong>Feel:</strong> Democratic. Structured. Network-native.
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 3: RELAY -->
+  <div class="card">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+      <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+      <line x1="50"   y1="47" x2="50"   y2="19"
+            stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50"   y1="47" x2="25.8" y2="61"
+            stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50"   y1="47" x2="74.2" y2="61"
+            stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="50"   cy="19" r="5"   fill="#1C1C1E"/>
+      <circle cx="25.8" cy="61" r="5"   fill="#1C1C1E"/>
+      <circle cx="74.2" cy="61" r="5"   fill="#1C1C1E"/>
+      <circle cx="50"   cy="47" r="7.5" fill="#1C1C1E"/>
+    </svg>
+
+    <div class="card-meta">
+      <div class="name">03 — Relay</div>
+      <div class="tagline">A hub node relaying to three peers — the Y-shape captures the mesh routing mechanic. One device receives and forwards. Structural, immediate, functional.</div>
+
+      <div>
+        <span class="pill"><span class="swatch" style="background:#F2F2F7; border-color:#ccc"></span> #F2F2F7</span>
+        <span class="pill"><span class="swatch" style="background:#1C1C1E"></span> #1C1C1E</span>
+      </div>
+
+      <div class="detail" style="margin-top:12px">
+        <strong>Elements:</strong> 1 hub (r=7.5) + 3 nodes (r=5) + 3 spokes<br>
+        <strong>Spokes:</strong> 120° intervals, 28px length from hub<br>
+        <strong>Feel:</strong> Mechanical. Purposeful. Action-oriented.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SIZE SCALE -->
+<p class="section-title">Scale Tests</p>
+<div class="sizes-grid">
+
+  <div class="sizes-block">
+    <h3>01 — Pulse at all sizes</h3>
+    <div class="size-row">
+      <span class="size-label">512</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">48</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">29</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="29" height="29">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">20</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sizes-block">
+    <h3>02 — Triad at all sizes</h3>
+    <div class="size-row">
+      <span class="size-label">512</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <rect width="100" height="100" rx="22" fill="#007AFF"/>
+        <line x1="50" y1="28" x2="30.9" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="30.9" y1="61" x2="69.1" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="69.1" y1="61" x2="50" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="50" cy="28" r="5.5" fill="white"/>
+        <circle cx="30.9" cy="61" r="5.5" fill="white"/>
+        <circle cx="69.1" cy="61" r="5.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">48</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+        <rect width="100" height="100" rx="22" fill="#007AFF"/>
+        <line x1="50" y1="28" x2="30.9" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="30.9" y1="61" x2="69.1" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="69.1" y1="61" x2="50" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="50" cy="28" r="5.5" fill="white"/>
+        <circle cx="30.9" cy="61" r="5.5" fill="white"/>
+        <circle cx="69.1" cy="61" r="5.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">29</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="29" height="29">
+        <rect width="100" height="100" rx="22" fill="#007AFF"/>
+        <line x1="50" y1="28" x2="30.9" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="30.9" y1="61" x2="69.1" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="69.1" y1="61" x2="50" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="50" cy="28" r="5.5" fill="white"/>
+        <circle cx="30.9" cy="61" r="5.5" fill="white"/>
+        <circle cx="69.1" cy="61" r="5.5" fill="white"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">20</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+        <rect width="100" height="100" rx="22" fill="#007AFF"/>
+        <line x1="50" y1="28" x2="30.9" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="30.9" y1="61" x2="69.1" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <line x1="69.1" y1="61" x2="50" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <circle cx="50" cy="28" r="5.5" fill="white"/>
+        <circle cx="30.9" cy="61" r="5.5" fill="white"/>
+        <circle cx="69.1" cy="61" r="5.5" fill="white"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sizes-block">
+    <h3>03 — Relay at all sizes</h3>
+    <div class="size-row">
+      <span class="size-label">512</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+        <line x1="50" y1="47" x2="50" y2="19" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="25.8" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="74.2" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="50" cy="19" r="5" fill="#1C1C1E"/>
+        <circle cx="25.8" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="74.2" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="50" cy="47" r="7.5" fill="#1C1C1E"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">48</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+        <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+        <line x1="50" y1="47" x2="50" y2="19" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="25.8" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="74.2" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="50" cy="19" r="5" fill="#1C1C1E"/>
+        <circle cx="25.8" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="74.2" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="50" cy="47" r="7.5" fill="#1C1C1E"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">29</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="29" height="29">
+        <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+        <line x1="50" y1="47" x2="50" y2="19" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="25.8" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="74.2" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="50" cy="19" r="5" fill="#1C1C1E"/>
+        <circle cx="25.8" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="74.2" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="50" cy="47" r="7.5" fill="#1C1C1E"/>
+      </svg>
+    </div>
+    <div class="size-row">
+      <span class="size-label">20</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+        <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+        <line x1="50" y1="47" x2="50" y2="19" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="25.8" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="50" y1="47" x2="74.2" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="50" cy="19" r="5" fill="#1C1C1E"/>
+        <circle cx="25.8" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="74.2" cy="61" r="5" fill="#1C1C1E"/>
+        <circle cx="50" cy="47" r="7.5" fill="#1C1C1E"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+
+<!-- MONOCHROME -->
+<p class="section-title">Monochrome Variants</p>
+<div class="mono-grid">
+
+  <!-- Pulse — black on white -->
+  <div class="mono-cell">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="72" height="72">
+      <rect width="100" height="100" rx="22" fill="white" stroke="#E5E5EA" stroke-width="1"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round" opacity="0.4"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="#1C1C1E" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="#1C1C1E"/>
+    </svg>
+    <span>Pulse / Light</span>
+  </div>
+
+  <!-- Pulse — white on black (original) -->
+  <div class="mono-cell">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="72" height="72">
+      <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+    </svg>
+    <span>Pulse / Dark</span>
+  </div>
+
+  <!-- Triad — original blue -->
+  <div class="mono-cell">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="72" height="72">
+      <rect width="100" height="100" rx="22" fill="#007AFF"/>
+      <line x1="50" y1="28" x2="30.9" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <line x1="30.9" y1="61" x2="69.1" y2="61" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <line x1="69.1" y1="61" x2="50" y2="28" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="50" cy="28" r="5.5" fill="white"/>
+      <circle cx="30.9" cy="61" r="5.5" fill="white"/>
+      <circle cx="69.1" cy="61" r="5.5" fill="white"/>
+    </svg>
+    <span>Triad / Blue</span>
+  </div>
+
+  <!-- Triad — black on white -->
+  <div class="mono-cell">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="72" height="72">
+      <rect width="100" height="100" rx="22" fill="white" stroke="#E5E5EA" stroke-width="1"/>
+      <line x1="50" y1="28" x2="30.9" y2="61" stroke="#1C1C1E" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <line x1="30.9" y1="61" x2="69.1" y2="61" stroke="#1C1C1E" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <line x1="69.1" y1="61" x2="50" y2="28" stroke="#1C1C1E" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="50" cy="28" r="5.5" fill="#1C1C1E"/>
+      <circle cx="30.9" cy="61" r="5.5" fill="#1C1C1E"/>
+      <circle cx="69.1" cy="61" r="5.5" fill="#1C1C1E"/>
+    </svg>
+    <span>Triad / Light</span>
+  </div>
+
+  <!-- Relay — original light -->
+  <div class="mono-cell">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="72" height="72">
+      <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+      <line x1="50" y1="47" x2="50" y2="19" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="47" x2="25.8" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="47" x2="74.2" y2="61" stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="50" cy="19" r="5" fill="#1C1C1E"/>
+      <circle cx="25.8" cy="61" r="5" fill="#1C1C1E"/>
+      <circle cx="74.2" cy="61" r="5" fill="#1C1C1E"/>
+      <circle cx="50" cy="47" r="7.5" fill="#1C1C1E"/>
+    </svg>
+    <span>Relay / Light</span>
+  </div>
+
+  <!-- Relay — inverted dark -->
+  <div class="mono-cell">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="72" height="72">
+      <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+      <line x1="50" y1="47" x2="50" y2="19" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="47" x2="25.8" y2="61" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="47" x2="74.2" y2="61" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="50" cy="19" r="5" fill="white"/>
+      <circle cx="25.8" cy="61" r="5" fill="white"/>
+      <circle cx="74.2" cy="61" r="5" fill="white"/>
+      <circle cx="50" cy="47" r="7.5" fill="white"/>
+    </svg>
+    <span>Relay / Dark</span>
+  </div>
+
+</div>
+
+<!-- ANIMATION IDEAS -->
+<p class="section-title">Animation Concepts</p>
+<div class="anim-grid">
+
+  <div class="anim-card">
+    <h3>01 — Pulse</h3>
+    <p>On launch: the center dot fades in first (300ms, spring), then the inner arc draws itself clockwise (400ms ease-out), then the outer arc follows with a 150ms delay. On message received: the outer arc briefly pulses outward by 2px and fades back. Keyframe: scale 1.0 → 1.05 → 1.0, opacity 0.45 → 0.8 → 0.45.</p>
+  </div>
+
+  <div class="anim-card">
+    <h3>02 — Triad</h3>
+    <p>On launch: the three nodes pop in sequentially (top → bottom-left → bottom-right, 80ms apart, spring animation). The connecting lines draw afterward, each from node to node (200ms stroke-dashoffset animation). On connection established: a brief flash travels along one edge — a small highlight dot sliding along the line stroke.</p>
+  </div>
+
+  <div class="anim-card">
+    <h3>03 — Relay</h3>
+    <p>On launch: hub scales in (spring), then spokes extend from center outward simultaneously (300ms ease-out, transform-origin: center hub), then outer nodes pop in at the tips. On message relay: a dot travels from one outer node → hub → another outer node, easing in and out. Duration 600ms.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,32 +1,43 @@
 import SwiftUI
 import BaylanCore
 
-struct ConnectionStatusBanner: View {
-    let meshDeviceCount: Int
+/// Persistent status pill shown in the Mesh tab nav bar.
+/// Searching state uses an animated pulse ring; connected shows a static dot.
+struct MeshStatusPill: View {
+    let peerCount: Int
+
+    private var isSearching: Bool { peerCount == 0 }
 
     var body: some View {
-        HStack(spacing: BaylanSpacing.xs) {
-            Circle()
-                .fill(meshDeviceCount > 0 ? Color.green : BaylanTheme.textTertiary)
-                .frame(width: 6, height: 6)
-                .shadow(color: meshDeviceCount > 0 ? Color.green.opacity(0.8) : .clear, radius: 4)
+        HStack(spacing: 5) {
+            if isSearching {
+                PulseRadarCompact()
+                    .frame(width: 10, height: 10)
+                    .clipped()
+            } else {
+                ConnectionDot(state: .connected, size: 6)
+            }
 
             Text(statusText)
-                .font(BaylanTypography.caption)
-                .foregroundStyle(BaylanTheme.textSecondary)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(isSearching ? BaylanTheme.textSecondary : BaylanTheme.textPrimary)
+                .contentTransition(.numericText())
         }
-        .padding(.horizontal, BaylanSpacing.md)
+        .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .glass()
-        .padding(.horizontal, BaylanSpacing.lg)
-        .animation(.spring(response: 0.3), value: meshDeviceCount)
+        .background(BaylanTheme.surface)
+        .clipShape(Capsule(style: .continuous))
+        .animation(.spring(response: 0.4), value: peerCount)
     }
 
     private var statusText: String {
-        switch meshDeviceCount {
-        case 0: return "No nearby devices"
-        case 1: return "1 device in mesh"
-        default: return "\(meshDeviceCount) devices in mesh"
+        switch peerCount {
+        case 0: return "Searching..."
+        case 1: return "1 in mesh"
+        default: return "\(peerCount) in mesh"
         }
     }
 }
+
+/// Legacy name kept for any remaining call sites during migration
+typealias ConnectionStatusBanner = MeshStatusPill

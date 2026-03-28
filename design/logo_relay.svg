@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!--
+    BAYLA — "RELAY"
+    Concept: A hub node connected to three peer nodes via spokes —
+    a Y/trident shape. Captures the core mechanic of mesh routing:
+    one device receives a message and relays it outward. The center
+    hub is larger, suggesting the focal point of propagation. Clean,
+    structural, instantly readable as a network at any size.
+
+    Hub: (50, 47) — optically centered (Y is heavier at bottom)
+    Spokes extend 28px each at 120° intervals:
+      Top:          (50,   19)
+      Bottom-left:  (25.8, 61)
+      Bottom-right: (74.2, 61)
+  -->
+
+  <!-- App icon background -->
+  <rect width="100" height="100" rx="22" fill="#F2F2F7"/>
+
+  <!-- Spoke lines — drawn first (behind nodes) -->
+  <line x1="50"   y1="47" x2="50"   y2="19"
+        stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="50"   y1="47" x2="25.8" y2="61"
+        stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="50"   y1="47" x2="74.2" y2="61"
+        stroke="#1C1C1E" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Peer nodes -->
+  <circle cx="50"   cy="19" r="5"   fill="#1C1C1E"/>
+  <circle cx="25.8" cy="61" r="5"   fill="#1C1C1E"/>
+  <circle cx="74.2" cy="61" r="5"   fill="#1C1C1E"/>
+
+  <!-- Center hub — larger, the relay node -->
+  <circle cx="50"   cy="47" r="7.5" fill="#1C1C1E"/>
+
+</svg>

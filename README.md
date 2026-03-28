@@ -168,14 +168,3 @@ MIT — see [LICENSE](LICENSE)
 ## Contributing
 
 This project is in early bootstrap phase. Architecture decisions are being finalized. See [`project.md`](project.md) for the full technical specification and [`docs/`](docs/) for architecture records.
-
-
-
-
-
-A       Q    Q    Q    Q     B
-key                         key
-Akey(soob) -> q -> q -> q -> q -> Bkey(Akey(soob)) = soob
-
-QR
-zayavka

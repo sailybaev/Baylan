@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!--
+    PULSE v3 — Pulse + Mesh
+    Builds on v2: the three peer nodes are now connected to each other
+    by thin mesh lines, showing that peers can talk directly (not only
+    through the center). The arcs draw over the mesh lines where they
+    cross, creating a subtle "woven" depth — the signal wave and the
+    peer network are two separate, layered systems.
+
+    Draw order:
+      1. Background
+      2. Mesh connection lines  (thin, translucent — behind arcs)
+      3. Arcs                   (thicker — over the lines)
+      4. All dots               (on top of everything)
+  -->
+  <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+
+  <!-- Mesh connections between peer nodes (drawn BEHIND arcs) -->
+  <!-- A (50, 24) — C (64.1, 44.9) -->
+  <line x1="50"   y1="24"   x2="64.1" y2="44.9"
+        stroke="white" stroke-width="1.4" opacity="0.4"/>
+  <!-- B (25.6, 58.9) — C (64.1, 44.9) -->
+  <line x1="25.6" y1="58.9" x2="64.1" y2="44.9"
+        stroke="white" stroke-width="1.4" opacity="0.4"/>
+  <!-- A (50, 24) — B (25.6, 58.9) -->
+  <line x1="50"   y1="24"   x2="25.6" y2="58.9"
+        stroke="white" stroke-width="1.4" opacity="0.4"/>
+
+  <!-- Outer arc (drawn after lines so it layers over them) -->
+  <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38"
+        fill="none" stroke="white" stroke-width="2.5"
+        stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Inner arc -->
+  <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61"
+        fill="none" stroke="white" stroke-width="3.5"
+        stroke-linecap="round"/>
+
+  <!-- All dots on top -->
+  <!-- Center node -->
+  <circle cx="50"   cy="50"   r="5.5" fill="white"/>
+  <!-- Peer node A: outer arc, top -->
+  <circle cx="50"   cy="24"   r="3.5" fill="white"/>
+  <!-- Peer node B: outer arc, lower-left -->
+  <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+  <!-- Peer node C: inner arc, right -->
+  <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+</svg>

@@ -9,10 +9,14 @@ public enum BaylanSpacing {
     public static let xxl:  CGFloat = 24
     public static let xxxl: CGFloat = 32
 
-    /// Standard card / bubble corner radius (2xl — very rounded)
-    public static let cornerRadius:      CGFloat = 20
+    /// Standard card / row corner radius
+    public static let cornerRadius:      CGFloat = 14
+    /// Message bubbles
+    public static let cornerRadiusBubble: CGFloat = 18
+    /// Bubble tail corner (the corner closest to the sender)
+    public static let cornerRadiusBubbleTail: CGFloat = 5
     /// Smaller elements (badges, chips)
-    public static let cornerRadiusSmall: CGFloat = 12
+    public static let cornerRadiusSmall: CGFloat = 10
     /// Pill-shaped (fully rounded)
     public static let cornerRadiusFull:  CGFloat = 9999
 

@@ -36,7 +36,14 @@ public final class AppEnvironment {
 
     // MARK: - Factory
 
-    public static func create() throws -> AppEnvironment {
+    public static func create() async throws -> AppEnvironment {
+        // SwiftData container setup (SQLite file open/migrate) is the primary startup bottleneck.
+        // ModelContainer is @unchecked Sendable so it can cross actor boundaries.
+        let container = try await Task.detached(priority: .userInitiated) {
+            try SwiftDataMessageRepository.makeContainer(inMemory: false)
+        }.value
+
+        // Identity + service assembly runs on main actor (IdentityService is @MainActor)
         let crypto = CryptoEngine()
         let identityStore = IdentityStore(crypto: crypto)
         let identityService = try IdentityService(identityStore: identityStore)
@@ -51,7 +58,6 @@ public final class AppEnvironment {
             signingPrivateKey: (try? identityStore.signingPrivateKey()) ?? Data()
         )
 
-        let container = try SwiftDataMessageRepository.makeContainer(inMemory: false)
         let repository = SwiftDataMessageRepository(modelContainer: container)
 
         let messageService = MessageService(

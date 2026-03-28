@@ -27,10 +27,10 @@ public enum BaylanTheme {
     public static let warning = Color(hex: "FF9F0A")
 
     // MARK: - Message bubbles
-    /// Sent message bubble
-    public static let bubbleSent = Color(hex: "1C3A00").opacity(0.9)
+    /// Sent message bubble — accent tint, not opaque green
+    public static let bubbleSent = accent.opacity(0.13)
     /// Received message bubble
     public static let bubbleReceived = Color(hex: "1E1E1E")
-    /// Nearby channel bubble
-    public static let bubbleNearby = Color(hex: "1A1A2E")
+    /// Nearby channel bubble — subtle blue tint
+    public static let bubbleNearby = Color(hex: "141422")
 }

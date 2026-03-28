@@ -35,6 +35,13 @@ struct IdentityView: View {
         .sheet(isPresented: $showScanner) {
             scannerSheet
         }
+        .alert("Display Name", isPresented: $isEditingName) {
+            TextField("Name", text: $editedName)
+            Button("Save") { saveName() }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("This name is visible to nearby peers.")
+        }
     }
 
     private var qrSection: some View {
@@ -131,6 +138,12 @@ struct IdentityView: View {
     private func startEditingName() {
         editedName = identity?.displayName ?? ""
         isEditingName = true
+    }
+
+    private func saveName() {
+        let trimmed = editedName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        appEnvironment?.identityService.updateDisplayName(trimmed)
     }
 
     private func copyToClipboard(_ text: String) {

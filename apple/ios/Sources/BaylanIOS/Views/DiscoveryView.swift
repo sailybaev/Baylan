@@ -1,13 +1,12 @@
 import SwiftUI
 import BaylanCore
 
-struct DiscoveryView: View {
+struct PeopleView: View {
     @Environment(\.appEnvironment) private var appEnvironment
 
     @State private var viewModel: DiscoveryViewModel?
     @State private var selectedPeer: Peer?
-    @State private var navigateToThreadId: UUID?
-    @State private var pendingThreadId: UUID?
+    @State private var presentedChatThreadId: UUID?
 
     var body: some View {
         NavigationStack {
@@ -20,72 +19,69 @@ struct DiscoveryView: View {
                     ProgressView().tint(BaylanTheme.accent)
                 }
             }
-            .navigationTitle("Nearby")
+            .navigationTitle("People")
             .navigationBarTitleDisplayMode(.large)
-            .navigationDestination(item: $navigateToThreadId) { threadId in
+            #if targetEnvironment(macCatalyst)
+            .navigationDestination(item: $presentedChatThreadId) { threadId in
                 if let env = appEnvironment {
                     ChatView(threadId: threadId, appEnvironment: env)
                 }
             }
+            #endif
         }
-        .onAppear { setupViewModel() }
-        .sheet(item: $selectedPeer, onDismiss: {
-            if let threadId = pendingThreadId {
-                navigateToThreadId = threadId
-                pendingThreadId = nil
-            }
-        }) { peer in
-            if let vm = viewModel {
-                PeerProfileView(peer: peer, viewModel: vm) { threadId in
-                    pendingThreadId = threadId
+        #if !targetEnvironment(macCatalyst)
+        .fullScreenCover(isPresented: Binding(
+            get: { presentedChatThreadId != nil },
+            set: { if !$0 { presentedChatThreadId = nil } }
+        )) {
+            if let threadId = presentedChatThreadId, let env = appEnvironment {
+                NavigationStack {
+                    ChatView(threadId: threadId, appEnvironment: env)
                 }
             }
         }
+        #endif
+        .sheet(item: $selectedPeer) { peer in
+            if let vm = viewModel {
+                PeerProfileView(peer: peer, viewModel: vm) { threadId in
+                    selectedPeer = nil
+                    #if targetEnvironment(macCatalyst)
+                    presentedChatThreadId = threadId
+                    #else
+                    // Brief delay lets the profile sheet dismiss before covering
+                    Task {
+                        try? await Task.sleep(for: .milliseconds(300))
+                        presentedChatThreadId = threadId
+                    }
+                    #endif
+                }
+            }
+        }
+        .onAppear { setupViewModel() }
     }
 
     @ViewBuilder
     private func content(vm: DiscoveryViewModel) -> some View {
         if vm.isSearching {
-            searchingState
+            searchingState(vm: vm)
         } else {
             peerList(vm: vm)
         }
     }
 
-    private var searchingState: some View {
+    private func searchingState(vm: DiscoveryViewModel) -> some View {
         VStack(spacing: BaylanSpacing.xl) {
             Spacer()
-
-            ZStack {
-                ForEach(0..<3, id: \.self) { index in
-                    Circle()
-                        .strokeBorder(BaylanTheme.accent.opacity(0.3 - Double(index) * 0.08), lineWidth: 1)
-                        .frame(width: CGFloat(80 + index * 50), height: CGFloat(80 + index * 50))
-                        .scaleEffect(1.0)
-                        .animation(
-                            .easeInOut(duration: 1.5).repeatForever(autoreverses: true).delay(Double(index) * 0.4),
-                            value: true
-                        )
-                }
-
-                Image(systemName: "antenna.radiowaves.left.and.right")
-                    .font(.system(size: 32, weight: .medium))
-                    .foregroundStyle(BaylanTheme.accent)
-                    .symbolEffect(.pulse)
-            }
-            .frame(height: 200)
-
+            PulseRadar(peerCount: vm.nearbyPeers.count, size: 200)
             VStack(spacing: BaylanSpacing.sm) {
-                Text("Searching for Peers")
+                Text("Searching for peers")
                     .font(BaylanTypography.title3)
                     .foregroundStyle(BaylanTheme.textPrimary)
-
-                Text("Make sure the other person has Baylan open.")
+                Text("Make sure Bayla is open on nearby devices")
                     .font(BaylanTypography.subheadline)
                     .foregroundStyle(BaylanTheme.textSecondary)
                     .multilineTextAlignment(.center)
             }
-
             Spacer()
         }
         .padding(.horizontal, BaylanSpacing.xxl)
@@ -93,22 +89,82 @@ struct DiscoveryView: View {
 
     private func peerList(vm: DiscoveryViewModel) -> some View {
         ScrollView {
-            LazyVStack(spacing: BaylanSpacing.xs) {
+            LazyVStack(spacing: BaylanSpacing.xs, pinnedViews: []) {
+                // Section: Nearby Now
+                sectionHeader("NEARBY NOW")
+
                 ForEach(vm.nearbyPeers) { peer in
                     Button {
                         #if !targetEnvironment(macCatalyst)
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         #endif
                         selectedPeer = peer
                     } label: {
                         PeerRow(peer: peer)
                     }
                     .buttonStyle(.plain)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .top).combined(with: .opacity),
+                        removal: .opacity.combined(with: .scale(scale: 0.97))
+                    ))
                 }
+
+                // Scan QR card
+                scanQRPlaceholder
             }
             .padding(.horizontal, BaylanSpacing.md)
             .padding(.top, BaylanSpacing.sm)
+            .animation(.spring(response: 0.35, dampingFraction: 0.8), value: vm.nearbyPeers.map(\.id))
         }
+    }
+
+    private func sectionHeader(_ title: String) -> some View {
+        HStack {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(BaylanTheme.textTertiary)
+                .kerning(0.5)
+            Spacer()
+        }
+        .padding(.horizontal, BaylanSpacing.xs)
+        .padding(.top, BaylanSpacing.sm)
+        .padding(.bottom, 4)
+    }
+
+    private var scanQRPlaceholder: some View {
+        Button {
+            // Scan QR is available from the You tab
+        } label: {
+            HStack(spacing: BaylanSpacing.md) {
+                Image(systemName: "qrcode.viewfinder")
+                    .font(.system(size: 22, weight: .light))
+                    .foregroundStyle(BaylanTheme.accent)
+                    .frame(width: BaylanSpacing.avatarMedium, height: BaylanSpacing.avatarMedium)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Scan QR Code")
+                        .font(BaylanTypography.headline)
+                        .foregroundStyle(BaylanTheme.textPrimary)
+                    Text("Verify a contact's identity in person")
+                        .font(.system(size: 13, weight: .regular))
+                        .foregroundStyle(BaylanTheme.textSecondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "arrow.up.right")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(BaylanTheme.textTertiary)
+            }
+            .padding(.horizontal, BaylanSpacing.md)
+            .padding(.vertical, BaylanSpacing.sm + 2)
+            .background(BaylanTheme.surface)
+            .clipShape(RoundedRectangle(cornerRadius: BaylanSpacing.cornerRadius))
+        }
+        .buttonStyle(.plain)
+        .padding(.top, BaylanSpacing.lg)
+        .disabled(true)
+        .opacity(0.6)
     }
 
     private func setupViewModel() {
@@ -119,4 +175,3 @@ struct DiscoveryView: View {
         )
     }
 }
-

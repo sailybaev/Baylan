@@ -10,8 +10,9 @@ struct UnreadBadge: View {
                 .font(BaylanTypography.caption2)
                 .fontWeight(.bold)
                 .foregroundStyle(BaylanTheme.background)
-                .padding(.horizontal, count > 9 ? 6 : 5)
-                .padding(.vertical, 3)
+                // No horizontal padding for single digits — frame becomes square → Capsule = circle
+                .padding(.horizontal, count > 9 ? 6 : 0)
+                .frame(minWidth: 20, minHeight: 20)
                 .background(BaylanTheme.accent)
                 .clipShape(Capsule())
                 .transition(.scale.combined(with: .opacity))

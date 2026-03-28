@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bayla — Pulse Variants</title>
+<style>
+  :root { --bg: #F5F5F7; --card: #ffffff; --sub: #6E6E73; --border: #D2D2D7; --text: #1D1D1F; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 64px 48px;
+  }
+  header { text-align: center; margin-bottom: 56px; }
+  header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.4px; }
+  header p  { font-size: 15px; color: var(--sub); margin-top: 6px; }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 48px;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 36px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);
+  }
+
+  .label {
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sub);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .desc {
+    font-size: 13px;
+    color: var(--sub);
+    line-height: 1.55;
+  }
+
+  /* size strip */
+  .strip {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.04);
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .strip-title { font-size: 13px; font-weight: 600; color: var(--sub); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; min-width:60px; }
+  .strip-icons { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+  .size-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .size-item span { font-size:10px; color:var(--sub); }
+
+  /* dark strip */
+  .dark-strip {
+    background: #1C1C1E;
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .dark-strip .size-item span { color: #636366; }
+
+  /* tinted strip */
+  .tinted-strip {
+    background: #0A84FF;
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .tinted-strip .size-item span { color: rgba(255,255,255,0.5); }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--sub);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Bayla — Pulse Variants</h1>
+  <p>Three levels of mesh detail on the same base form</p>
+</header>
+
+<!-- THREE MAIN CARDS -->
+<p class="section-title">Concepts</p>
+<div class="row">
+
+  <!-- V1 -->
+  <div class="card">
+    <!-- 200px preview -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+      <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38"
+            fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61"
+            fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+    </svg>
+    <div style="width:100%">
+      <div class="label">v1 — Original</div>
+      <div class="desc">Center node + two concentric horseshoe arcs. Pure signal. 3 elements total — the most refined reduction.</div>
+    </div>
+  </div>
+
+  <!-- V2 -->
+  <div class="card">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+      <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38"
+            fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61"
+            fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50"   cy="50"   r="5.5" fill="white"/>
+      <circle cx="50"   cy="24"   r="3.5" fill="white"/>
+      <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+      <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+    </svg>
+    <div style="width:100%">
+      <div class="label">v2 — Pulse + Peers</div>
+      <div class="desc">Three peer nodes sit directly on the arc paths, occluding the stroke beneath — the signal has been received at each point. 6 elements.</div>
+    </div>
+  </div>
+
+  <!-- V3 -->
+  <div class="card">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+      <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+      <line x1="50"   y1="24"   x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <line x1="50"   y1="24"   x2="25.6" y2="58.9"  stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38"
+            fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61"
+            fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50"   cy="50"   r="5.5" fill="white"/>
+      <circle cx="50"   cy="24"   r="3.5" fill="white"/>
+      <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+      <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+    </svg>
+    <div style="width:100%">
+      <div class="label">v3 — Pulse + Mesh</div>
+      <div class="desc">Peer-to-peer connections drawn between the three nodes, layered behind the arcs. The signal wave and the mesh are two visible systems. 9 elements.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SIDE BY SIDE AT SCALE -->
+<p class="section-title">Scale — Light Background</p>
+<div class="strip">
+  <span class="strip-title">V1</span>
+  <div class="strip-icons">
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+      <span>80px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+      <span>48px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="29" height="29">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+      <span>29px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+      </svg>
+      <span>20px</span>
+    </div>
+  </div>
+
+  <span class="strip-title">V2</span>
+  <div class="strip-icons">
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>80px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>48px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="29" height="29">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>29px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>20px</span>
+    </div>
+  </div>
+
+  <span class="strip-title">V3</span>
+  <div class="strip-icons">
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <line x1="50" y1="24" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="50" y1="24" x2="25.6" y2="58.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>80px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <line x1="50" y1="24" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="50" y1="24" x2="25.6" y2="58.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>48px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="29" height="29">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <line x1="50" y1="24" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="50" y1="24" x2="25.6" y2="58.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>29px</span>
+    </div>
+    <div class="size-item">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+        <rect width="100" height="100" rx="22" fill="#1C1C1E"/>
+        <line x1="50" y1="24" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <line x1="50" y1="24" x2="25.6" y2="58.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+        <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+        <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="5.5" fill="white"/>
+        <circle cx="50" cy="24" r="3.5" fill="white"/>
+        <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+        <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+      </svg>
+      <span>20px</span>
+    </div>
+  </div>
+</div>
+
+<!-- TINTED (iOS system accent) -->
+<p class="section-title">Tinted — iOS Blue Accent</p>
+<div class="tinted-strip">
+  <div class="size-item">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+      <rect width="100" height="100" rx="22" fill="#0A84FF"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+    </svg>
+    <span>v1</span>
+  </div>
+  <div class="size-item">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+      <rect width="100" height="100" rx="22" fill="#0A84FF"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+      <circle cx="50" cy="24" r="3.5" fill="white"/>
+      <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+      <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+    </svg>
+    <span>v2</span>
+  </div>
+  <div class="size-item">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+      <rect width="100" height="100" rx="22" fill="#0A84FF"/>
+      <line x1="50" y1="24" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <line x1="50" y1="24" x2="25.6" y2="58.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+      <circle cx="50" cy="24" r="3.5" fill="white"/>
+      <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+      <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+    </svg>
+    <span>v3</span>
+  </div>
+</div>
+
+<!-- MONOCHROME (symbols only, no icon bg) -->
+<p class="section-title">Symbol Only — No Background</p>
+<div class="strip" style="background:#1C1C1E; padding:32px; gap:40px;">
+  <div class="size-item">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+    </svg>
+    <span style="color:#636366; font-size:10px">v1</span>
+  </div>
+  <div class="size-item">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+      <circle cx="50" cy="24" r="3.5" fill="white"/>
+      <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+      <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+    </svg>
+    <span style="color:#636366; font-size:10px">v2</span>
+  </div>
+  <div class="size-item">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+      <line x1="50" y1="24" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <line x1="25.6" y1="58.9" x2="64.1" y2="44.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <line x1="50" y1="24" x2="25.6" y2="58.9" stroke="white" stroke-width="1.4" opacity="0.4"/>
+      <path d="M 31.62 68.38 A 26 26 0 1 1 68.38 68.38" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M 39.39 60.61 A 15 15 0 1 1 60.61 60.61" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="5.5" fill="white"/>
+      <circle cx="50" cy="24" r="3.5" fill="white"/>
+      <circle cx="25.6" cy="58.9" r="3.5" fill="white"/>
+      <circle cx="64.1" cy="44.9" r="3.5" fill="white"/>
+    </svg>
+    <span style="color:#636366; font-size:10px">v3</span>
+  </div>
+</div>
+
+</body>
+</html>

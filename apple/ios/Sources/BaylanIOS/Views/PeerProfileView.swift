@@ -16,81 +16,86 @@ struct PeerProfileView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                BaylanTheme.background.ignoresSafeArea()
+        ZStack {
+            BaylanTheme.background.ignoresSafeArea()
 
-                VStack(spacing: BaylanSpacing.xxl) {
-                    Spacer()
+            VStack(spacing: 0) {
+                // Drag indicator
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(BaylanTheme.separator)
+                    .frame(width: 36, height: 4)
+                    .padding(.top, BaylanSpacing.md)
+                    .padding(.bottom, BaylanSpacing.xxl)
 
-                    AvatarView(
-                        name: peer.identity.displayName,
-                        userId: peer.identity.userId,
-                        size: BaylanSpacing.avatarLarge,
-                        showAccentRing: peer.isConnected
-                    )
+                // Avatar
+                AvatarView(
+                    name: peer.identity.displayName,
+                    userId: peer.identity.userId,
+                    size: BaylanSpacing.avatarLarge,
+                    showAccentRing: peer.isConnected
+                )
 
-                    VStack(spacing: BaylanSpacing.sm) {
-                        HStack(spacing: BaylanSpacing.xs) {
-                            Text(peer.identity.displayName)
-                                .font(BaylanTypography.title2)
-                                .foregroundStyle(BaylanTheme.textPrimary)
+                Spacer().frame(height: BaylanSpacing.lg)
 
-                            if peer.identity.verified {
-                                Image(systemName: "checkmark.seal.fill")
-                                    .font(.system(size: 18))
-                                    .foregroundStyle(BaylanTheme.accent)
-                            }
-                        }
+                // Name + verified
+                HStack(spacing: BaylanSpacing.xs) {
+                    Text(peer.identity.displayName)
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(BaylanTheme.textPrimary)
 
-                        Text(peer.identity.displayId)
-                            .font(BaylanTypography.caption)
-                            .foregroundStyle(BaylanTheme.textTertiary)
-                            .fontDesign(.monospaced)
+                    if peer.identity.verified {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 16))
+                            .foregroundStyle(BaylanTheme.accent)
+                    }
+                }
 
-                        if peer.isConnected {
-                            HStack(spacing: 4) {
-                                Circle()
-                                    .fill(Color.green)
-                                    .frame(width: 6, height: 6)
-                                Text("Nearby")
-                                    .font(BaylanTypography.caption)
-                                    .foregroundStyle(BaylanTheme.textSecondary)
-                            }
+                Spacer().frame(height: 6)
+
+                // userId
+                Text(peer.identity.displayId)
+                    .font(BaylanTypography.mono)
+                    .foregroundStyle(BaylanTheme.textTertiary)
+
+                Spacer().frame(height: BaylanSpacing.sm)
+
+                // Status row
+                HStack(spacing: 5) {
+                    ConnectionDot(state: peer.isConnected ? .connected : .disconnected, size: 6)
+                    Text(peer.isConnected ? "Nearby · \(peer.distanceLabel)" : "Not nearby")
+                        .font(.system(size: 13, weight: .regular))
+                        .foregroundStyle(BaylanTheme.textSecondary)
+                }
+
+                Spacer().frame(height: BaylanSpacing.xxxl)
+
+                // Message button
+                Button {
+                    startChat()
+                } label: {
+                    HStack {
+                        if isStartingChat {
+                            ProgressView().tint(.black)
+                        } else {
+                            Text("Message")
+                                .font(BaylanTypography.headline)
+                                .foregroundStyle(.black)
                         }
                     }
-
-                    Button {
-                        startChat()
-                    } label: {
-                        HStack {
-                            if isStartingChat {
-                                ProgressView().tint(.black)
-                            } else {
-                                Text("Start Chat")
-                                    .font(BaylanTypography.headline)
-                                    .foregroundStyle(.black)
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, BaylanSpacing.md)
-                        .background(BaylanTheme.accent)
-                        .clipShape(RoundedRectangle(cornerRadius: BaylanSpacing.cornerRadius))
-                    }
-                    .disabled(isStartingChat)
-                    .padding(.horizontal, BaylanSpacing.xl)
-
-                    Spacer()
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, BaylanSpacing.md)
+                    .background(BaylanTheme.accent)
+                    .clipShape(RoundedRectangle(cornerRadius: BaylanSpacing.cornerRadius))
                 }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
-                        .foregroundStyle(BaylanTheme.accent)
-                }
+                .disabled(isStartingChat)
+                .padding(.horizontal, BaylanSpacing.xxl)
+
+                Spacer()
             }
         }
+        .presentationDetents([.medium])
+        .presentationDragIndicator(.hidden)
+        .presentationCornerRadius(20)
     }
 
     private func startChat() {
@@ -98,8 +103,7 @@ struct PeerProfileView: View {
         isStartingChat = true
         Task {
             let threadId = await vm.startChat(with: peer)
-            onStartChat(threadId)  // sets pendingThreadId before sheet dismisses
-            dismiss()
+            onStartChat(threadId)
         }
     }
 }
